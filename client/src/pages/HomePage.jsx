@@ -57,7 +57,7 @@ const HomePage = () => {
         setError('');
 
         try {
-            const data = await postRequest('/generate-readme', { repoUrl });
+            const data = await postRequest('/api/generate-readme', { repoUrl });
             navigate('/generated', { state: { readme: data.readme, repoData: data.repoData } });
         } catch (err) {
             setError(err.message || 'Something went wrong');

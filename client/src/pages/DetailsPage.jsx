@@ -152,7 +152,7 @@ const DetailsPage = () => {
         }
 
         try {
-            const data = await postRequest('/generate-readme-detailed', {
+            const data = await postRequest('/api/generate-readme-detailed', {
                 repoUrl,
                 ...formData
             });
