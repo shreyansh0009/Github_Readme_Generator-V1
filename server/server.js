@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { Octokit } = require('@octokit/rest');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const OpenAI = require('openai');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -67,8 +67,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Configure Google Generative AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Configure OpenAI
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
 // Configure GitHub API
 const octokit = new Octokit({
@@ -287,13 +289,10 @@ ${repoData.topics && repoData.topics.length > 0 ? `- Topics: ${repoData.topics.j
 `;
 }
 
-// Generate README with Gemini AI
+// Generate README with OpenAI
 async function generateReadmeWithAI(repoData, additionalInfo = {}, owner, repo) {
     try {
         console.log('Generating README with AI...');
-        
-        // Get the model - using the newer API format
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         
         // Prepare contact information section if available
         let contactSection = '';
@@ -352,12 +351,26 @@ Use modern markdown formatting with proper heading hierarchy, code syntax highli
 The README should be ready for immediate use without requiring edits.
 `;
 
-        console.log('Sending prompt to Gemini API...');
+        console.log('Sending prompt to OpenAI API...');
         
-        // Generate content using the correct API format
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
+        // Generate content using OpenAI Chat Completion API
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                {
+                    role: "system",
+                    content: "You are an expert at creating professional GitHub README.md files. Generate complete, well-structured README files with proper markdown formatting."
+                },
+                {
+                    role: "user",
+                    content: prompt
+                }
+            ],
+            temperature: 0.7,
+            max_tokens: 2000,
+        });
+        
+        const text = completion.choices[0].message.content;
         
         console.log('Successfully generated README');
         return { readme: text, isGenericFallback: false };
@@ -497,7 +510,7 @@ app.use((err, req, res, next) => {
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-    console.log(`API key loaded: ${process.env.GEMINI_API_KEY ? 'Yes' : 'No'}`);
+    console.log(`OpenAI API key loaded: ${process.env.OPENAI_API_KEY ? 'Yes' : 'No'}`);
     console.log(`GitHub token loaded: ${process.env.GITHUB_TOKEN ? 'Yes' : 'No'}`);
 });
 
