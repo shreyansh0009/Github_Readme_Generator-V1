@@ -1,12 +1,5 @@
 ```markdown
-# 🚀 Github Readme Generator V1
-
-![Github Readme Generator](https://your-logo-url.com/logo.png) <!-- Replace with your logo URL -->
-
-![GitHub stars](https://img.shields.io/github/stars/shreyansh0009/Github_Readme_Generator-V1?style=social) 
-![GitHub forks](https://img.shields.io/github/forks/shreyansh0009/Github_Readme_Generator-V1?style=social) 
-![GitHub issues](https://img.shields.io/github/issues/shreyansh0009/Github_Readme_Generator-V1) 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+# 🚀 Github Readme Generator V1:
 
 ## 📖 Description
 
