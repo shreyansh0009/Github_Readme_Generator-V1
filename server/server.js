@@ -57,6 +57,8 @@ app.use(rateLimitMiddleware);
 // Middleware
 app.use(cors({
     origin: [
+        'http://localhost:5173',
+        'http://localhost:3000',
         'https://readme-generator-v2-client.vercel.app',
         'https://readmegenerator.amanraj.me',
         'https://readmegeneratorbackend.vercel.app'

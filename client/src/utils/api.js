@@ -2,7 +2,7 @@
  * API utility functions for making requests to the server
  */
 
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'https://readmegeneratorbackend.vercel.app/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 /**
  * Make a POST request to the API
