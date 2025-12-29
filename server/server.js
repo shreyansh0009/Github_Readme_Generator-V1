@@ -59,11 +59,12 @@ app.use(cors({
     origin: [
         'http://localhost:5173',
         'http://localhost:3000',
-        'https://github-readme-generator-v1.vercel.app/',
-        'https://github-readme-generator-v1-saurabh.vercel.app/'
+        'https://github-readme-generator-v1.vercel.app',
+        'https://github-readme-generator-v1-saurabh.vercel.app'
     ],
     methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 app.use(express.json());
 
